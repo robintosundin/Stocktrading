@@ -1,5 +1,10 @@
 import java.util.Comparator;
 import java.util.Iterator;
+
+/** Structure for a stock trading implementation that maintains two prioritized
+ * queues for purchases and offers with basic functionality for performing transactions.
+ * @author Robin Sundin
+ */
 public class StockTrade {
     private PrioQueue<Bid> sellersQueue;
     private PrioQueue<Bid> buyersQueue;
@@ -22,14 +27,17 @@ public class StockTrade {
      * @return the transaction that took place or null if bid was added to sellersQueue.
      */
     public Transaction placeSellBid(Bid bid) {
-	Iterator<Bid> bidItr = sellBidsIterator();
-	while(bidItr.hasNext()){
+	Iterator<Bid> bidItr = sellBidsIterator(); // fetch iterator for sellersQueue
+	while(bidItr.hasNext()){ // iterate through sellersQueue and maybe find sell bid with same name
 		Bid tmp = bidItr.next();
 		if(tmp.name.equals(bid.name)){
-			sellersQueue.remove(tmp);
+			sellersQueue.remove(tmp); // remove previous bid from same client
 			break;
 		}
 	}
+	/** Tries to perform a transaction with existing buy bid from buyersQueue, if incoming
+	* sell bid is lower than some existing buy bid, performs transaction with previously existing buy bid.
+	*/ 
 	if(buyersQueue.peek()!=null&&bid.price<=buyersQueue.peek().price){
 		Bid buyBid = buyersQueue.poll();
 		return new Transaction(bid.name,buyBid.name,buyBid.price);

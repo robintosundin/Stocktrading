@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
+/** Unit testing with auto-generated cases for the StockTrade class, performs 200 various operational tests
+ * and displays helpful information regarding error if found.
+ * @author Chalmers
+ */
 public class TestStockTrade {
     enum BidKind {SELL, BUY};
     
@@ -10,6 +14,12 @@ public class TestStockTrade {
         final Bid bid;
         final Transaction expectedTransaction;
 
+	/**
+	 * Encapsulates information for a performed operation.
+	 * @param kind either a SELL or a BUY kind of operation
+	 * @param bid bid structure as outlined in the Bid class.
+	 * @param expectedTransaction used for reference when performing transaction
+	 */
         Operation(BidKind kind, Bid bid, Transaction expectedTransaction) {
             this.kind = kind;
             this.bid = bid;
@@ -27,6 +37,10 @@ public class TestStockTrade {
     static int lastnopdone = -1;
     static StringBuilder log = new StringBuilder();
 
+    /** Prints out information regarding the exception and a pointer to the erroneous code.
+     * @param e the exception being thrown
+     * @param log contains helpful information about erroneous code.
+     */
     static void showException(Exception e, StringBuilder log) {
         System.out.println("The operation on the last line of the following code causes an exception:\n");
         System.out.print(log.toString());
@@ -50,6 +64,7 @@ public class TestStockTrade {
                 showException(e, log);
             }
             log.append("  // result: " + (res == null ? "null" : res.toString()) + "\n");
+	    // exit runtime if the operation kind is not same as reference
             if (res == null && op.expectedTransaction != null ||
                     res != null && !res.equals(op.expectedTransaction)) {
                 System.out.println("The result on the last line of the following code is incorrect:\n");
@@ -60,6 +75,7 @@ public class TestStockTrade {
             nopdone++;
         }
     
+	// Add sell & buy bids to HashSets sellers and buyers through iterator
         Iterator<Bid> sellBidsIter = st.sellBidsIterator();
         HashSet<Bid> sellers = new HashSet<>();
         while (sellBidsIter.hasNext()) sellers.add(sellBidsIter.next());
@@ -68,6 +84,7 @@ public class TestStockTrade {
         HashSet<Bid> buyers = new HashSet<>();
         while (buyBidsIter.hasNext()) buyers.add(buyBidsIter.next());
 
+	// Assert that seller and buyer structures are properly maintained, if not then display error and exit
         if (!sellers.equals(t.sellBidsAtEnd) || !buyers.equals(t.buyBidsAtEnd)) {
             System.out.println("The remaining sets of bids was not correct after the following operations:\n");
             System.out.print(log.toString());

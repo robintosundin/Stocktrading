@@ -6,7 +6,10 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Perform manual interactive testing of a Stock trade priority queue implementation.
+ * @author Chalmers
+ */
 public class Run {
 
     private static class nameComparator implements Comparator<Bid>{
@@ -25,7 +28,7 @@ public class Run {
     }
     
     public static void main(String[] args) {
-        Pattern parsePattern =
+        Pattern parsePattern =	// compiled pattern used to check if allowed parameter format
             Pattern.compile(
                 "\\s*(?:"+ 
                 "(?:(\\S+)\\s+(s|b)\\s+(\\d+))|" +
@@ -43,12 +46,12 @@ public class Run {
             try {
                 inputLine = r.readLine();
             } catch (IOException e) {
-                System.err.println("reading from standard input falied");
+                System.err.println("reading from standard input failed");
                 e.printStackTrace();
                 System.exit(1);
             }
             Matcher m = parsePattern.matcher(inputLine);
-            if (m.matches()) {
+            if (m.matches()) {	// true if inputLine matches compiled format
                 if (m.group(1) != null) {  // new bid
                     Bid b = new Bid(m.group(1), Integer.parseInt(m.group(3)));
                     Transaction t = null;

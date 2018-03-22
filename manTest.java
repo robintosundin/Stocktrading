@@ -1,3 +1,7 @@
+/**
+ * Primitive manual testing of a Binary Heap implementation.
+ * @author Robin Sundin
+ */
 class manTest{
 	public static void main(String[] args){
 		NaturalOrderComparator<Integer> comp = new NaturalOrderComparator<Integer>();

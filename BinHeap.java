@@ -1,16 +1,22 @@
 import java.util.Iterator;
 import java.util.Comparator;
 import java.util.ArrayList;
+
+/**
+ * A generic binary heap implementation of a prioritized queue with elementary functionality.
+ * @author Robin Sundin
+ */
 public class BinHeap<E> implements PrioQueue<E>{
 	public Comparator<? super E> comp;
 	public ArrayList<E> binHeap = new ArrayList<E>();
-	public int currentSize;
+	public int currentSize; // physical size of binheap
 	public Iterator<E> itr;
 	public int size(){
 		return currentSize;
 	}
 	/**
 	 * Construct a BinHeap using a specific ordering
+	 * @param comp a comparator to be written as generic E.
 	 */
 	public BinHeap(Comparator<? super E> comp){
 		this.comp = comp;	
@@ -48,9 +54,11 @@ public class BinHeap<E> implements PrioQueue<E>{
 		percUp(insertIndex);
 		return;
 	}
+	/** Return the element in the heap with highest priority; the element with an index of 1.
+	 */
 	public E peek(){
 		if(currentSize==0) return null;
-		return binHeap.get(1); // Return element at index 1, i.e. highest priority
+		return binHeap.get(1);
 	}
 	/**
 	 * Removes and returns element in heap with highest priority.

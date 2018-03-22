@@ -3,7 +3,10 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-
+/**
+ * Unit testing for a Binary Heap implementation running 5 seconds or as specified as a single argument in seconds.
+ * @author Chalmers
+ */
 public class TestBinHeap {
     static Random randgen = new Random(686585037);
 
@@ -12,6 +15,11 @@ public class TestBinHeap {
     static int noperation = 0;
     static StringBuilder log = new StringBuilder();
 
+    /**
+     * Display faulty operation with a responsible exception and exit runtime.
+     * @param e an exception associated with faulty code.
+     * @param log faulty code.
+     */
     static void showException(Exception e, StringBuilder log) {
         System.out.println("The operation on the last line of the following code causes an exception:\n");
         System.out.print(log.toString());
@@ -20,15 +28,22 @@ public class TestBinHeap {
     }
     
     
+    /**
+     * Run a test of n random operations with some randomized integer relating to interval.
+     * May fail if the static method NaturalOrderComparator is non-existent (implemented in java 8).
+     * @param noperation number of operations to be performed
+     * @param interval relates to a random integer up to the value of interval.
+     */
     static void runTest(int noperation, int interval) {
         log = new StringBuilder();
         
         log.append("PrioQueue<Integer> pq = new BinHeap<>(new NaturalOrderComparator<Integer>());\n");
         PrioQueue<Integer> pq = new BinHeap<>(new NaturalOrderComparator<Integer>());
 
+	// refpq is used to assert proper functionality by comparing it to pq
         PriorityQueue<Integer> refpq = new PriorityQueue<>(10, new NaturalOrderComparator<Integer>());
         for (int j = 0; j < noperation; j++) {
-            int whichop = randgen.nextInt(5);
+            int whichop = randgen.nextInt(5); // Randomizes the next operation to be performed.
             switch (whichop) {
             case 0: {  // add
                 int element = randgen.nextInt(interval);

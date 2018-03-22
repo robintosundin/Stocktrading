@@ -1,5 +1,10 @@
 import java.util.Objects;
 
+/**
+ * Represents a finalized transaction containing the buyer and sellers
+ * information as well as agreed price.
+ * @author Chalmers
+ */
 public class Transaction {
     public Transaction(String sellerName, String buyerName, int price) {
         this.sellerName = sellerName;

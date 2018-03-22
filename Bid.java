@@ -1,5 +1,9 @@
 import java.util.Objects;
 
+/**
+ * A bid structure where every bid has a name and price; also implements comparison.
+ * @author Chalmers
+ */
 public class Bid {
     public Bid(String name, int price) {
         this.name = name;
